@@ -54,9 +54,16 @@ router.post('/worklog', function(req, res, next) {
     var jiraApi = new JiraApi(process.env.JIRA_HOST, dto.username, dto.password);
     jiraApi.postWorkLog(dto.issue, workLogDto).then(function(result) {
         
+        var message = "Your WorkLog was logged with success on \n"
+                    + process.env.JIRA_HOST + "\n"
+                    + "User: " + dto.username + "\n"
+                    + "Comments: " + result.comment + "\n" 
+                    + "Date: " + result.started + "\n"
+                    + "Time: " + result.timeSpent
+
         var response = {
             response_type: 'ephemeral',
-            text: JSON.stringify(result)
+            text: message
         }
         SlackHook(body.response_url, response);
 

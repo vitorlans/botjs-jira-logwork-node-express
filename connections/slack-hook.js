@@ -8,10 +8,10 @@ function delayedResponse(responseUrl, responseData) {
 
     axiosInstance.post(responseUrl, responseData)
     .then(function (response) {
-        console.log(responseData);
+        //console.log(responseData);
     })
     .catch(function (error) {
-        console.log(error);
+        //console.log(error);
     });
 
 }
