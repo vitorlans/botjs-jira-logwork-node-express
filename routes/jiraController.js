@@ -2,7 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 var JiraApi = require("../connections/jira-api")
+var SlackHook = require("../connections/slack-hook");
 var WorkLog = require("../models/WorkLog");
+
 
 var dto = {
     username:"",
@@ -52,13 +54,18 @@ router.post('/worklog', function(req, res, next) {
     var jiraApi = new JiraApi(process.env.JIRA_HOST, dto.username, dto.password);
     jiraApi.postWorkLog(dto.issue, workLogDto).then(function(result) {
         
-        res.json({
+        var response = {
             response_type: 'ephemeral',
             text: result
-        });
+        }
+        SlackHook(body.response_url, response)
 
     });
-
+    
+    res.json({
+        response_type: 'ephemeral',
+        text: 'received your command'
+    })
 });
 
 
