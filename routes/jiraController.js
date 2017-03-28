@@ -58,7 +58,7 @@ router.post('/worklog', function(req, res, next) {
             response_type: 'ephemeral',
             text: result
         }
-        SlackHook(body.response_url, response)
+        SlackHook(body.response_url, response);
 
     });
     
